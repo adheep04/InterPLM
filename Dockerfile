@@ -2,8 +2,9 @@
 # Dockerfile for InterPLM: Discovering Interpretable Features in Protein Language Models via Sparse Autoencoders
 # This image sets up an environment for extracting, analyzing, and visualizing interpretable features from protein language models (PLMs) using sparse autoencoders (SAEs).
 
-# Use Miniforge3 as the base image
-FROM condaforge/miniforge3:latest
+
+# Use Mambaforge from CondaForge as the base image
+FROM condaforge/mambaforge:latest
 
 # Install system dependencies (wget and git) and clean up apt caches
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -18,7 +19,7 @@ WORKDIR /app
 RUN git clone https://github.com/ElanaPearl/interPLM.git .
 
 # Create the conda environment from env.yml and clean conda caches
-RUN conda env create -f env.yml && conda clean -a -y
+RUN mamba env create -f env.yml && mamba clean -a -y
 
 # Update PATH so that the 'interplm' environment’s binaries come first.
 ENV PATH /opt/conda/envs/interplm/bin:$PATH
