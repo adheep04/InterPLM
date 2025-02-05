@@ -2,6 +2,7 @@
 # Dockerfile for InterPLM: Discovering Interpretable Features in Protein Language Models via Sparse Autoencoders
 # This image sets up an environment for extracting, analyzing, and visualizing interpretable features from protein language models (PLMs) using sparse autoencoders (SAEs).
 
+# multipass delete docker-vm || true && multipass purge || true && \
 # multipass launch --name docker-vm --memory 2G --disk 20G && \
 # multipass mount "$(pwd)" docker-vm:/home/ubuntu/dockerbuild && \
 # multipass exec docker-vm -- bash -c "curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && cd /home/ubuntu/dockerbuild && sudo docker build -t interplm . && sudo docker run -it -p 8501:8501 interplm"
