@@ -3,8 +3,18 @@
 # This image sets up an environment for extracting, analyzing, and visualizing interpretable features from protein language models (PLMs) using sparse autoencoders (SAEs).
 
 
-# Use Mambaforge from CondaForge as the base image
-FROM condaforge/mambaforge:latest
+# Use ??? as the base image
+#FROM ???
+
+#mambaorg/micromamba:0.27.0 exists
+#conda/miniconda3:latest exists
+#condaforge/mambaforge:latest exists
+#continuumio/miniconda3:latest exists
+#continuumio/miniconda:latest exists
+#continuumio/anaconda:latest exists
+#condaforge/miniforge3:latest exists
+
+
 
 # Install system dependencies (wget and git) and clean up apt caches
 RUN apt-get update && apt-get install -y --no-install-recommends \
