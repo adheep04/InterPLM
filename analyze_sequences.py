@@ -1,11 +1,4 @@
 #!/usr/bin/env python
-"""
-analyze_sequences.py - Analyze protein sequence differences using InterPLM
-
-This script compares two groups of protein sequences using InterPLM's sparse autoencoder
-to identify biological features that distinguish the groups. It processes FASTA files,
-extracts feature activations, and saves the results as .npy files.
-"""
 
 import os
 import logging
