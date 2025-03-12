@@ -12,7 +12,6 @@ from interplm.esm.embed import embed_list_of_prot_seqs
 
 import script_args
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
@@ -20,7 +19,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 def load_sequences(path: str) -> List[Tuple[str, str]]:
-    """Load protein sequences from a single FASTA file."""
+    """load protein sequences from a single fasta file."""
     sequences = []
     for record in SeqIO.parse(path, "fasta"):
         sequences.append((record.id, str(record.seq)))
@@ -32,7 +31,7 @@ def extract_features(sequences: List[Tuple[str, str]],
                      device: str,
                      batch_size: int,
                      max_seq_length: int) -> Dict[str, np.ndarray]:
-    """Extract features from protein sequences using a pretrained SAE."""
+    """extract features from protein sequences using a pretrained sae"""
     logger.info(f"Loading SAE model for {plm_model} layer {plm_layer}...")
 
     esm_model_map = {
@@ -73,8 +72,6 @@ def extract_features(sequences: List[Tuple[str, str]],
     return results
 
 def main():
-    """Main function to run the analysis."""
-
     if not os.path.exists(script_args.GROUP1_PATH):
         raise ValueError(f"Group 1 path does not exist: {script_args.GROUP1_PATH}")
 
