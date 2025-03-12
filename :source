@@ -1,0 +1,110 @@
+-- Bootstrap Lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+
+
+
+
+-- Load plugins
+require("lazy").setup({
+  -- File Explorer
+  { "nvim-neo-tree/neo-tree.nvim", dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" } },
+
+  {
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+        config = function()
+            require("nvim-treesitter.configs").setup({
+                ensure_installed = { "lua", "javascript", "typescript", "html", "css" }, -- Add more languages as needed
+                highlight = { enable = true },
+            })
+        end,
+    },
+
+  -- Language Server (LSP)
+  "williamboman/mason.nvim",
+  "williamboman/mason-lspconfig.nvim",
+  "neovim/nvim-lspconfig",
+
+
+  -- Autocompletion
+  "hrsh7th/nvim-cmp",
+  "hrsh7th/cmp-buffer",
+  "hrsh7th/cmp-path",
+  "hrsh7th/cmp-nvim-lsp",
+  "L3MON4D3/LuaSnip",
+
+  -- Fuzzy Finder
+  { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
+
+  -- Git
+  "lewis6991/gitsigns.nvim",
+  "tpope/vim-fugitive",
+
+  -- UI
+  "nvim-lualine/lualine.nvim",
+  "akinsho/bufferline.nvim",
+  "lukas-reineke/indent-blankline.nvim",
+  "folke/tokyonight.nvim",
+
+  -- Utilities
+  "numToStr/Comment.nvim",
+  "windwp/nvim-autopairs",
+  "kylechui/nvim-surround",
+  "akinsho/toggleterm.nvim",
+})
+
+-- Basic Settings
+vim.opt.number = true         -- Line numbers
+vim.opt.tabstop = 2           -- 2 spaces per tab
+vim.opt.shiftwidth = 2        -- Indent size
+vim.opt.expandtab = true      -- Use spaces instead of tabs
+vim.opt.mouse = "a"           -- Enable mouse
+vim.opt.termguicolors = true  -- Enable colors
+
+-- Set theme
+vim.cmd.colorscheme("tokyonight")
+
+
+-- Keybinds
+vim.g.mapleader = " "
+local map = vim.keymap.set
+map("n", "<leader>ff", "<cmd>Telescope find_files<CR>")  -- Find files
+map("n", "<leader>fg", "<cmd>Telescope live_grep<CR>")   -- Search text
+map("n", "<leader>e", "<cmd>Neotree toggle<CR>")         -- File explorer
+map("n", "<leader>q", "<cmd>q<CR>")                      -- Quit
+map("v", "<leader>c", '"+y<CR>')
+
+map({"n", "v", "o"}, "j", "h", { noremap = true, silent = true })
+map({"n", "v", "o"}, "k", "j", { noremap = true, silent = true })
+map({"n", "v", "o"}, "l", "k", { noremap = true, silent = true })
+map({"n", "v", "o"}, ";", "l", { noremap = true, silent = true })
+map({"n", "v", "o"}, "'", ":", { noremap = true })
+map({"n", "v", "o"}, "\\", "/", { noremap = true })
+map({"n", "v", "o"}, '<A-k>', ':m .+1<CR>==', { noremap = true })
+map({"n", "v", "o"}, '<A-l>', ':m .-2<CR>==', { noremap = true })
+map({"n", "v", "o"}, "<leader>\\", ":noh<CR>", { noremap = true, silent = true })
+map({"n", "v", "o"}, "<leader>z", "u", { noremap = true, silent = true })
+
+
+
+
+
+map({"n", "v", "o"}, "<A-j>", "<Nop>", { noremap = true, silent = true })
+
+-- load LSP servers via Mason
+require("mason").setup()
+require("mason-lspconfig").setup({
+    ensure_installed = { "lua_ls", "pyright" }, -- Replace with the actual server names you want
+})
